@@ -5,5 +5,11 @@
   
   #root{
     font-family: 'Roboto', sans-serif;
-    background-color: rgb(228, 227, 225);
+    background-color: rgb(202, 200, 196);
+    //let the height of the root element be the height of the viewport unless the content is taller
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    
+
   }

@@ -43,7 +43,21 @@ export function Store() {
 
   // If the data is still loading, show a loading message
   if (loading) {
-    return <h1>Loading...</h1>;
+    return (
+        <Container
+            style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "20vh",
+            height: "100vh",
+            }}
+        >
+            <Typography variant="h4" align="center">
+            Loading...
+            </Typography>
+        </Container>
+        );
+
   }
 
   // If the data has been loaded, show the products
