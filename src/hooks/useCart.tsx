@@ -1,56 +1,69 @@
 //make a cart state that will be used to store the cart items
 
-import { useState } from 'react';
+import { useState, useEffect } from "react";
 
-//  {
-//     id:1,
-//     title:'...',
-//     price:'...',
-//     category:'...',
-//     description:'...',
-//     image:'...'
-// }
+import { CartItemType } from "../utilities/types";
 
-//set types for the cart
-type CartItemType = {
-    id: number;
-    title: string;
-    price: number;
-    category: string;
-    description: string;
-    image: string;
-};
-
-
+const CART_STORAGE_KEY = "cartItems";
 
 const useCart = () => {
-    const [cart, setCart] = useState([] as CartItemType[]);
-    const [total, setTotal] = useState(0);
-    const [cartCount, setCartCount] = useState(0);
+  // use local storage to store &  retrieve cart items
+  const initialCart = JSON.parse(
+    localStorage.getItem(CART_STORAGE_KEY) || "[]"
+  ) as CartItemType[];
+  const [cart, setCart] = useState(initialCart);
+  const initialTotal = cart.reduce((acc, item) => acc + item.price, 0);
+  const [total, setTotal] = useState(initialTotal);
+  const initialCartCount = cart.length;
+  const [cartCount, setCartCount] = useState(initialCartCount);
 
-    //add to cart function
-    const addToCart = (product : CartItemType) => {
-        setCart([...cart, product]);
-        setCartCount(cartCount + 1);
-        setTotal(total + product.price);
-    };
+  useEffect(() => {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+    //update the total and cart count
+    setTotal(cart.reduce((acc, item) => acc + item.price, 0));
+    setCartCount(cart.length);
+  }, [cart]);
 
-    //remove from cart function
-    const removeFromCart = (product : CartItemType) => {
-        const newCart = cart.filter((item) => item.id !== product.id);
-        setCart(newCart);
-        setCartCount(cartCount - 1);
-        setTotal(total - product.price);
-    };
+  //add to cart function
+  const addToCart = (product: CartItemType) => {
+    setCart([...cart, product]);
+  };
 
-    //clear cart function
-    const clearCart = () => {
-        setCart([]);
-        setCartCount(0);
-        setTotal(0);
-    };
+  //remove from cart function
+  const removeFromCart = (product: CartItemType) => {
+    //count the number of times the product appears in the cart
+    const newCart = cart.filter((item) => item.id !== product.id);
+    setCart(newCart);
+  };
 
-    return { cart, total, cartCount, addToCart, removeFromCart, clearCart };
-}
+  const removeOneFromCart = (product: CartItemType) => {
+    // Find the index of the first instance of the product in the cart
+    const index = cart.findIndex((item) => item.id === product.id);
+
+    // If the product is found in the cart, remove just one instance
+    if (index !== -1) {
+      const newCart = [...cart];
+      newCart.splice(index, 1); // Remove one instance at the found index
+      setCart(newCart);
+    }
+  };
+
+  //clear cart function
+  const clearCart = () => {
+    setCart([]);
+    setCartCount(0);
+    setTotal(0);
+  };
+
+  return {
+    cart,
+    total,
+    cartCount,
+    addToCart,
+    removeFromCart,
+    clearCart,
+    removeOneFromCart,
+  };
+};
 
 export { useCart };
