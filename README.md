@@ -1,30 +1,56 @@
-# React + TypeScript + Vite
+# SastaShop
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+SastaShop is an online shopping platform where users can browse and purchase items from a variety of categories.
 
-Currently, two official plugins are available:
+## Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Check out the live demo of SastaShop [here](https://sastashop.netlify.app/).
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Browse a wide range of products.
+- Add items to the cart.
+- Remove items from the cart.
+- View total price of items in the cart.
+- Clear the cart.
 
-- Configure the top-level `parserOptions` property like this:
+## Technologies Used
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+- React: Frontend framework for building the user interface.
+- Material-UI: React component library for UI design.
+- React Router: Library for routing within a React application.
+- Local Storage: Used for storing cart data locally in the browser.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Setup
+
+To run this project locally, follow these steps:
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-username/sastashop.git
+   ```
+
+2. Navigate into the project directory:
+ ```bash
+   cd sastashop
+   ```
+
+3. Install dependencies:
+  ```bash
+  npm install
+
+   ```
+4. Start the development server:
+ ```bash
+   npm start
+   ```
+5. Open http://localhost:3000 in your browser to view the app.
+
+## Contributing
+
+Contributions are welcome! If you find any bugs or have suggestions for improvement, feel free to open an issue or submit a pull request.
+
+## License
+
+This project is licensed under the MIT License.
