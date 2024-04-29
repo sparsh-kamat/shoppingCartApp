@@ -5,6 +5,7 @@ import {
   Typography,
   Button,
   Grid,
+  Container,
 } from "@mui/material"; // Importing Material-UI components
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"; // Importing the shopping cart icon
 
@@ -25,17 +26,21 @@ import { CartItemType } from "../utilities/types";
 //     incrementCount,
 //   };
 
-
 // Creating the Store component
 export function Store() {
   // Destructuring the products and loading state from the custom hook
   const { products, loading } = useFetchProducts();
 
-  // Destructuring the cart state and the addToCart function from the custom hook
-  const { addToCart } = useCart();
+  const { cart, addToCart, removeOneFromCart } = useCart();
+
+  // Group items by ID and calculate total count of each item
+  const groupedCart = cart.reduce((acc, curr) => {
+    acc[curr.id] = acc[curr.id] ? acc[curr.id] + 1 : 1;
+    return acc;
+  }, {} as Record<number, number>);
 
   //Desctructuring the perItemCount state and the incrementCount and subtractCount functions from the custom hook
-  
+
   // If the data is still loading, show a loading message
   if (loading) {
     return <h1>Loading...</h1>;
@@ -104,26 +109,85 @@ export function Store() {
               </Typography>
             </CardContent>
             <CardContent style={{ padding: 0 }}>
-                
-              <Button
-                variant="contained"
-                fullWidth
-                disableElevation
-                color="primary"
-                sx={{
-                  borderRadius: 0,
-                  "&:hover": {
-                    color: "#ff5fff",
-                  },
-                }}
-                style={{ padding: 0 }}
-                onClick={() => {
-                  addToCart(product);
-                }}
-                startIcon={<ShoppingCartIcon />}
-              >
-                Add to Cart
-              </Button>
+              {
+                // If the product is in the cart, show the   - button followed by the count of the product in the cart followed by the + button
+                // If the product is not in the cart, show the Add to Cart button
+
+                groupedCart[product.id] ? (
+                  <Container
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      height: "100%",
+                      width: "100%",
+                      padding: 0,
+                      border : "0.2px solid #000000"
+
+                    }}
+                  >
+                    <Button
+                      variant="contained"
+                      disableElevation
+                      color="secondary"
+                      sx={{
+                        borderRadius: 0,
+                        "&:hover": {
+                          color: "#ff5fff",
+                        },
+                      }}
+                      style={{ padding: 0, height: "100%", width: "33.33%" }} // Each button takes 1/3 of the width
+                      onClick={() => {
+                        removeOneFromCart(product);
+                      }}
+                    >
+                      -
+                    </Button>
+                    <Typography
+                      variant="body1"
+                      style={{ margin: "0 8px", flex: 1 }} // Takes the remaining space
+                    >
+                      {groupedCart[product.id]}
+                    </Typography>
+                    <Button
+                      variant="contained"
+                      disableElevation
+                      color="primary"
+                      sx={{
+                        borderRadius: 0,
+                        "&:hover": {
+                          color: "#ff5fff",
+                        },
+                      }}
+                      style={{ padding: 0, height: "100%", width: "33.33%" }} // Each button takes 1/3 of the width
+                      onClick={() => {
+                        addToCart(product);
+                      }}
+                    >
+                      +
+                    </Button>
+                  </Container>
+                ) : (
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    disableElevation
+                    color="primary"
+                    sx={{
+                      borderRadius: 0,
+                      "&:hover": {
+                        color: "#ff5fff",
+                      },
+                    }}
+                    style={{ padding: 0 }}
+                    onClick={() => {
+                      addToCart(product);
+                    }}
+                    startIcon={<ShoppingCartIcon />}
+                  >
+                    Add to Cart
+                  </Button>
+                )
+              }
             </CardContent>
           </Card>
         </Grid>
