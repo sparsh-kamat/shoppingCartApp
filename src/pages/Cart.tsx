@@ -2,7 +2,6 @@ import { Typography, Button, Grid, Paper, Container, Box } from "@mui/material";
 import { useCart } from "../hooks/useCart";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
-import DeleteIcon from "@mui/icons-material/Delete";
 
 export function Cart() {
   const { cart, total, addToCart, clearCart, removeOneFromCart } = useCart();
