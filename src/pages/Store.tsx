@@ -80,10 +80,10 @@ export function Store() {
           key={product.id}
           //make it center
 
-          justifyContent={"center"}
-          alignContent={"center"}
-          alignItems={"center"}
-          justifyItems={"center"}
+          // justifyContent={"center"}
+          // alignContent={"center"}
+          // alignItems={"center"}
+          // justifyItems={"center"}
           textAlign={"center"}
           padding={0}
         >
