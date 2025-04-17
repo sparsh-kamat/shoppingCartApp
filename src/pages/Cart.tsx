@@ -63,7 +63,7 @@ export function Cart() {
                         Price: ${product.price}
                       </Typography>
                       <Typography variant="body1">
-                        Total: ${productTotal}
+                        Total: ${productTotal.toFixed(2)}
                       </Typography>
                     </Box>
                     <Box
@@ -93,7 +93,7 @@ export function Cart() {
 
       <hr style={{ width: "100%" }} />
       <Grid container direction={"column"} item xs={12} mt={2} mb={2}>
-        <Typography variant="h6">Total: ${total}</Typography>
+        <Typography variant="h6">Total: ${total.toFixed(2)}</Typography>
         <Button variant="contained" color="primary" onClick={clearCart}>
           Clear Cart
         </Button>
